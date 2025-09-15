@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبر تلاميذك - منصة تعليمية أوفلاين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #48bb78, #38a169);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f56565, #e53e3e);
+        }
+
+        .introduction {
+            background: rgba(103, 126, 234, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-right: 4px solid #667eea;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .question-form {
+            background: rgba(103, 126, 234, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px dashed #667eea;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .answer-option:hover {
+            border-color: #667eea;
+        }
+
+        .answer-option input[type="radio"] {
+            margin-left: 10px;
+            transform: scale(1.2);
+        }
+
+        .answer-option input[type="text"] {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 5px;
+        }
+
+        .questions-list {
+            margin-top: 30px;
+        }
+
+        .question-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-right: 4px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .answers-display {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .answer-display {
+            padding: 8px 12px;
+            background: rgba(103, 126, 234, 0.1);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .answer-display.correct {
+            background: rgba(72, 187, 120, 0.2);
+            font-weight: 600;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(103, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+
+        .quiz-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            border-color: #667eea;
+            background: rgba(103, 126, 234, 0.1);
+        }
+
+        .question-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .question-card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .quiz-answers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .quiz-answer {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .quiz-answer:hover {
+            border-color: #667eea;
+            background: rgba(103, 126, 234, 0.1);
+        }
+
+        .quiz-answer.selected {
+            border-color: #667eea;
+            background: rgba(103, 126, 234, 0.2);
+        }
+
+        .quiz-answer.correct {
+            border-color: #48bb78;
+            background: rgba(72, 187, 120, 0.2);
+        }
+
+        .quiz-answer.wrong {
+            border-color: #f56565;
+            background: rgba(245, 101, 101, 0.2);
+        }
+
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .quiz-progress {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .timer {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(245, 101, 101, 0.1);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #e53e3e;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(72, 187, 120, 0.1);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #38a169;
+            margin-bottom: 20px;
+        }
+
+        .results {
+            text-align: center;
+            padding: 40px;
+            background: rgba(72, 187, 120, 0.1);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .results h2 {
+            color: #38a169;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .answers-grid, .quiz-answers {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 اختبر تلاميذك</h1>
+            <p>منصة تعليمية تفاعلية أوفلاين</p>
+        </div>
+
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <div class="introduction">
+                <h2>مرحباً بك في منصة اختبر تلاميذك</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                    منصة أوفلاين تساعد المعلم على كتابة أسئلة تفاعلية لطلابه وحفظها محلياً، 
+                    ثم عرضها في شكل اختبارات ممتعة داخل الفصل. مناسبة لجميع المواد الدراسية 
+                    (قرآن - عربي - رياضيات - علوم - وأي مادة أخرى).
+                </p>
+            </div>
+
+            <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">كيفية الاستخدام</h3>
+            <div class="steps">
+                <div class="step">
+                    <h3>1️⃣ إنشاء الأسئلة</h3>
+                    <p>اكتب الأسئلة والإجابات في صفحة الداشبورد مع تحديد الإجابة الصحيحة لكل سؤال.</p>
+                </div>
+                <div class="step">
+                    <h3>2️⃣ حفظ الاختبار</h3>
+                    <p>اضغط زر حفظ الاختبار ليتم حفظه محلياً في جهازك بدون الحاجة للإنترنت.</p>
+                </div>
+                <div class="step">
+                    <h3>3️⃣ بدء الاختبار</h3>
+                    <p>انتقل إلى صفحة الاختبار لعرض الأسئلة على الطلاب بأشكال تفاعلية متنوعة.</p>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn" onclick="showPage('dashboard')">
+                    🚀 ابدأ إنشاء اختبار جديد
+                </button>
+                <button class="btn btn-secondary" onclick="loadSavedQuiz()">
+                    📂 تحميل اختبار محفوظ
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="page" id="dashboard">
+            <h2 style="color: #4a5568; margin-bottom: 30px; text-align: center;">📝 إعداد الاختبار</h2>
+
+            <div class="form-group">
+                <label for="quizTitle">عنوان الاختبار:</label>
+                <input type="text" id="quizTitle" placeholder="مثال: اختبار القرآن الكريم - سورة البقرة">
+            </div>
+
+            <div class="form-group">
+                <label for="quizDescription">وصف مختصر:</label>
+                <textarea id="quizDescription" rows="3" placeholder="وصف مختصر للاختبار وأهدافه التعليمية"></textarea>
+            </div>
+
+            <div class="question-form">
+                <h3 style="color: #667eea; margin-bottom: 20px;">➕ إضافة سؤال جديد</h3>
+                
+                <div class="form-group">
+                    <label for="questionText">نص السؤال:</label>
+                    <textarea id="questionText" rows="3" placeholder="اكتب السؤال هنا..."></textarea>
+                </div>
+
+                <div class="answers-grid">
+                    <div class="answer-option">
+                        <input type="radio" name="correctAnswer" value="0" id="correct0">
+                        <input type="text" id="answer0" placeholder="الإجابة الأولى">
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" name="correctAnswer" value="1" id="correct1">
+                        <input type="text" id="answer1" placeholder="الإجابة الثانية">
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" name="correctAnswer" value="2" id="correct2">
+                        <input type="text" id="answer2" placeholder="الإجابة الثالثة">
+                    </div>
+                    <div class="answer-option">
+                        <input type="radio" name="correctAnswer" value="3" id="correct3">
+                        <input type="text" id="answer3" placeholder="الإجابة الرابعة">
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="addQuestion()">➕ إضافة السؤال</button>
+                </div>
+            </div>
+
+            <div class="questions-list" id="questionsList">
+                <!-- Questions will be displayed here -->
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="saveQuiz()">💾 حفظ الاختبار</button>
+                <button class="btn" onclick="startQuiz()">🎯 بدء الاختبار</button>
+                <button class="btn btn-danger" onclick="showPage('home')">🔙 العودة للرئيسية</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page -->
+        <div class="page" id="quiz">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2 id="quizTitleDisplay"></h2>
+                    <p id="quizDescriptionDisplay"></p>
+                </div>
+
+                <div class="quiz-modes" id="quizModes">
+                    <div class="mode-btn" data-mode="sequential">
+                        📋 عرض تسلسلي
+                    </div>
+                    <div class="mode-btn" data-mode="cards">
+                        🃏 بطاقات تفاعلية
+                    </div>
+                    <div class="mode-btn" data-mode="game">
+                        🎮 وضع اللعبة
+                    </div>
+                    <div class="mode-btn" data-mode="random">
+                        🎲 ترتيب عشوائي
+                    </div>
+                </div>
+
+                <div id="quizContent">
+                    <!-- Quiz content will be loaded here -->
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-danger" onclick="showPage('dashboard')">🔙 العودة للداشبورد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuiz = {
+            title: '',
+            description: '',
+            questions: []
+        };
+
+        let quizState = {
+            currentQuestion: 0,
+            score: 0,
+            timeRemaining: 0,
+            timer: null,
+            mode: 'sequential',
+            userAnswers: [],
+            showingResults: false
+        };
+
+        // Navigation functions
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Dashboard functions
+        function addQuestion() {
+            const questionText = document.getElementById('questionText').value.trim();
+            const answers = [
+                document.getElementById('answer0').value.trim(),
+                document.getElementById('answer1').value.trim(),
+                document.getElementById('answer2').value.trim(),
+                document.getElementById('answer3').value.trim()
+            ];
+            
+            const correctAnswerRadio = document.querySelector('input[name="correctAnswer"]:checked');
+            
+            if (!questionText || answers.some(answer => !answer) || !correctAnswerRadio) {
+                alert('⚠️ يرجى ملء جميع الحقول وتحديد الإجابة الصحيحة');
+                return;
+            }
+
+            const question = {
+                question: questionText,
+                answers: answers,
+                correct: parseInt(correctAnswerRadio.value)
+            };
+
+            currentQuiz.questions.push(question);
+            updateQuestionsList();
+            clearQuestionForm();
+        }
+
+        function clearQuestionForm() {
+            document.getElementById('questionText').value = '';
+            document.getElementById('answer0').value = '';
+            document.getElementById('answer1').value = '';
+            document.getElementById('answer2').value = '';
+            document.getElementById('answer3').value = '';
+            document.querySelectorAll('input[name="correctAnswer"]').forEach(radio => {
+                radio.checked = false;
+            });
+        }
+
+        function updateQuestionsList() {
+            const container = document.getElementById('questionsList');
+            
+            if (currentQuiz.questions.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #718096; font-style: italic;">لم يتم إضافة أي أسئلة بعد</p>';
+                return;
+            }
+
+            let html = '<h3 style="color: #4a5568; margin-bottom: 20px;">📋 الأسئلة المضافة (' + currentQuiz.questions.length + ')</h3>';
+            
+            currentQuiz.questions.forEach((q, index) => {
+                html += `
+                    <div class="question-item">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                            <h4>السؤال ${index + 1}</h4>
+                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="removeQuestion(${index})">🗑️ حذف</button>
+                        </div>
+                        <p style="font-weight: 600; margin-bottom: 15px;">${q.question}</p>
+                        <div class="answers-display">
+                            ${q.answers.map((answer, i) => `
+                                <div class="answer-display ${i === q.correct ? 'correct' : ''}">
+                                    ${i === q.correct ? '✅' : '◯'} ${answer}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function removeQuestion(index) {
+            if (confirm('هل أنت متأكد من حذف هذا السؤال؟')) {
+                currentQuiz.questions.splice(index, 1);
+                updateQuestionsList();
+            }
+        }
+
+        function saveQuiz() {
+            if (currentQuiz.questions.length === 0) {
+                alert('⚠️ يرجى إضافة أسئلة أولاً');
+                return;
+            }
+
+            const title = document.getElementById('quizTitle').value.trim();
+            const description = document.getElementById('quizDescription').value.trim();
+
+            if (!title) {
+                alert('⚠️ يرجى إدخال عنوان الاختبار');
+                return;
+            }
+
+            currentQuiz.title = title;
+            currentQuiz.description = description;
+
+            // Note: Using in-memory storage instead of localStorage as per instructions
+            // In a real environment with localStorage, you would use:
+            // localStorage.setItem('savedQuiz', JSON.stringify(currentQuiz));
+            
+            alert('✅ تم حفظ الاختبار بنجاح!\n' + 
+                  'العنوان: ' + title + '\n' + 
+                  'عدد الأسئلة: ' + currentQuiz.questions.length);
+        }
+
+        function loadSavedQuiz() {
+            // In a real environment, this would load from localStorage
+            // For now, we'll show a message about the limitation
+            if (currentQuiz.questions.length > 0) {
+                if (confirm('يوجد اختبار محفوظ مؤقتاً في الذاكرة. هل تريد الانتقال للداشبورد؟')) {
+                    document.getElementById('quizTitle').value = currentQuiz.title || '';
+                    document.getElementById('quizDescription').value = currentQuiz.description || '';
+                    updateQuestionsList();
+                    showPage('dashboard');
+                }
+            } else {
+                alert('ℹ️ لا توجد اختبارات محفوظة في الذاكرة.\nملاحظة: في البيئة الحقيقية، ستكون البيانات محفوظة في localStorage.');
+                showPage('dashboard');
+            }
+        }
+
+        function startQuiz() {
+            if (currentQuiz.questions.length === 0) {
+                alert('⚠️ يرجى إضافة أسئلة أولاً');
+                return;
+            }
+
+            // Update quiz title and description
+            document.getElementById('quizTitleDisplay').textContent = currentQuiz.title || 'اختبار بدون عنوان';
+            document.getElementById('quizDescriptionDisplay').textContent = currentQuiz.description || 'لا يوجد وصف';
+
+            // Reset quiz state
+            quizState = {
+                currentQuestion: 0,
+                score: 0,
+                timeRemaining: 0,
+                timer: null,
+                mode: 'sequential',
+                userAnswers: [],
+                showingResults: false
+            };
+
+            showPage('quiz');
+            showQuizModes();
+        }
+
+        // Quiz functions
+        function showQuizModes() {
+            document.getElementById('quizModes').style.display = 'grid';
+            document.getElementById('quizContent').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #718096;">
+                    <h3>اختر طريقة عرض الأسئلة</h3>
+                    <p>انقر على أحد الأوضاع أعلاه لبدء الاختبار</p>
+                </div>
+            `;
+
+            // Add event listeners to mode buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const mode = this.getAttribute('data-mode');
+                    startQuizWithMode(mode);
+                });
+            });
+        }
+
+        function startQuizWithMode(mode) {
+            quizState.mode = mode;
+            document.getElementById('quizModes').style.display = 'none';
+
+            // Prepare questions based on mode
+            let questions = [...currentQuiz.questions];
+            if (mode === 'random') {
+                questions = shuffleArray(questions);
+            }
+
+            quizState.questions = questions;
+            quizState.userAnswers = new Array(questions.length).fill(null);
+
+            if (mode === 'game') {
+                quizState.timeRemaining = questions.length * 30; // 30 seconds per question
+                startTimer();
+            }
+
+            displayQuestion();
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function startTimer() {
+            if (quizState.timer) clearInterval(quizState.timer);
+            
+            quizState.timer = setInterval(() => {
+                quizState.timeRemaining--;
+                
+                if (quizState.timeRemaining <= 0) {
+                    clearInterval(quizState.timer);
+                    finishQuiz();
+                    return;
+                }
+                
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(quizState.timeRemaining / 60);
+            const seconds = quizState.timeRemaining % 60;
+            const timerElement = document.querySelector('.timer');
+            if (timerElement) {
+                timerElement.innerHTML = `⏰ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function displayQuestion() {
+            const question = quizState.questions[quizState.currentQuestion];
+            let html = '';
+
+            // Progress bar
+            const progress = ((quizState.currentQuestion + 1) / quizState.questions.length) * 100;
+            html += `
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <p>السؤال ${quizState.currentQuestion + 1} من ${quizState.questions.length}</p>
+                </div>
+            `;
+
+            // Timer and score for game mode
+            if (quizState.mode === 'game') {
+                const minutes = Math.floor(quizState.timeRemaining / 60);
+                const seconds = quizState.timeRemaining % 60;
+                html += `
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                        <div class="timer">⏰ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}</div>
+                        <div class="score">🏆 النقاط: ${quizState.score}</div>
+                    </div>
+                `;
+            }
+
+            // Question card
+            const cardClass = quizState.mode === 'cards' ? 'question-card' : 'question-card';
+            html += `
+                <div class="${cardClass}" id="questionCard">
+                    <div class="quiz-question">
+                        ${question.question}
+                    </div>
+                    <div class="quiz-answers" id="quizAnswers">
+                        ${question.answers.map((answer, index) => `
+                            <div class="quiz-answer" data-answer="${index}" onclick="selectAnswer(${index})">
+                                ${answer}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Navigation
+            html += `
+                <div class="quiz-navigation">
+                    <button class="btn" onclick="previousQuestion()" ${quizState.currentQuestion === 0 ? 'disabled' : ''}>
+                        👈 السابق
+                    </button>
+                    <div>
+                        ${quizState.currentQuestion < quizState.questions.length - 1 ? 
+                            '<button class="btn" onclick="nextQuestion()" id="nextBtn">التالي 👉</button>' : 
+                            '<button class="btn btn-secondary" onclick="finishQuiz()" id="finishBtn">إنهاء الاختبار 🏁</button>'
+                        }
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('quizContent').innerHTML = html;
+
+            // Restore previous answer if exists
+            if (quizState.userAnswers[quizState.currentQuestion] !== null) {
+                const selectedAnswer = quizState.userAnswers[quizState.currentQuestion];
+                document.querySelector(`[data-answer="${selectedAnswer}"]`).classList.add('selected');
+            }
+        }
+
+        function selectAnswer(answerIndex) {
+            // Clear previous selection
+            document.querySelectorAll('.quiz-answer').forEach(answer => {
+                answer.classList.remove('selected');
+            });
+
+            // Select new answer
+            document.querySelector(`[data-answer="${answerIndex}"]`).classList.add('selected');
+            quizState.userAnswers[quizState.currentQuestion] = answerIndex;
+
+            // Auto-advance in card mode after 1 second
+            if (quizState.mode === 'cards') {
+                setTimeout(() => {
+                    if (quizState.currentQuestion < quizState.questions.length - 1) {
+                        nextQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                }, 1000);
+            }
+        }
+
+        function nextQuestion() {
+            if (quizState.currentQuestion < quizState.questions.length - 1) {
+                quizState.currentQuestion++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (quizState.currentQuestion > 0) {
+                quizState.currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            if (quizState.timer) {
+                clearInterval(quizState.timer);
+            }
+
+            // Calculate results
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+
+            quizState.userAnswers.forEach((userAnswer, index) => {
+                if (userAnswer !== null && userAnswer === quizState.questions[index].correct) {
+                    correctAnswers++;
+                } else if (userAnswer !== null) {
+                    wrongAnswers++;
+                }
+            });
+
+            const totalAnswered = correctAnswers + wrongAnswers;
+            const percentage = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
+            const unanswered = quizState.questions.length - totalAnswered;
+
+            let grade = '';
+            let gradeColor = '';
+            if (percentage >= 90) {
+                grade = 'ممتاز';
+                gradeColor = '#38a169';
+            } else if (percentage >= 80) {
+                grade = 'جيد جداً';
+                gradeColor = '#48bb78';
+            } else if (percentage >= 70) {
+                grade = 'جيد';
+                gradeColor = '#68d391';
+            } else if (percentage >= 60) {
+                grade = 'مقبول';
+                gradeColor = '#f6ad55';
+            } else {
+                grade = 'يحتاج تحسين';
+                gradeColor = '#f56565';
+            }
+
+            let html = `
+                <div class="results">
+                    <h2>🎉 انتهى الاختبار!</h2>
+                    <div style="font-size: 1.2rem; margin: 20px 0;">
+                        <span style="color: ${gradeColor}; font-weight: bold; font-size: 1.5rem;">${grade}</span>
+                    </div>
+                    
+                    <div class="results-stats">
+                        <div class="stat">
+                            <h3>${quizState.questions.length}</h3>
+                            <p>إجمالي الأسئلة</p>
+                        </div>
+                        <div class="stat">
+                            <h3 style="color: #38a169;">${correctAnswers}</h3>
+                            <p>إجابات صحيحة</p>
+                        </div>
+                        <div class="stat">
+                            <h3 style="color: #f56565;">${wrongAnswers}</h3>
+                            <p>إجابات خاطئة</p>
+                        </div>
+                        <div class="stat">
+                            <h3 style="color: #718096;">${unanswered}</h3>
+                            <p>لم يتم الإجابة</p>
+                        </div>
+                        <div class="stat">
+                            <h3 style="color: ${gradeColor};">${percentage}%</h3>
+                            <p>النسبة المئوية</p>
+                        </div>
+                    </div>
+
+                    <div style="margin: 30px 0;">
+                        <button class="btn" onclick="reviewAnswers()">📖 مراجعة الإجابات</button>
+                        <button class="btn btn-secondary" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
+                        <button class="btn btn-danger" onclick="showPage('dashboard')">🔙 العودة للداشبورد</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('quizContent').innerHTML = html;
+            quizState.showingResults = true;
+        }
+
+        function reviewAnswers() {
+            let html = '<div style="max-width: 800px; margin: 0 auto;">';
+            html += '<h2 style="text-align: center; color: #4a5568; margin-bottom: 30px;">📖 مراجعة الإجابات</h2>';
+
+            quizState.questions.forEach((question, index) => {
+                const userAnswer = quizState.userAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                const wasAnswered = userAnswer !== null;
+
+                html += `
+                    <div class="question-item" style="margin-bottom: 25px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h4>السؤال ${index + 1}</h4>
+                            <span style="padding: 5px 12px; border-radius: 15px; font-size: 14px; font-weight: bold; ${
+                                !wasAnswered ? 'background: #e2e8f0; color: #718096;' :
+                                isCorrect ? 'background: rgba(72, 187, 120, 0.2); color: #38a169;' : 
+                                'background: rgba(245, 101, 101, 0.2); color: #e53e3e;'
+                            }">
+                                ${!wasAnswered ? 'لم يتم الإجابة' : isCorrect ? '✅ صحيح' : '❌ خطأ'}
+                            </span>
+                        </div>
+                        <p style="font-weight: 600; margin-bottom: 15px;">${question.question}</p>
+                        <div class="answers-display">
+                            ${question.answers.map((answer, i) => `
+                                <div class="answer-display ${
+                                    i === question.correct ? 'correct' : ''
+                                } ${
+                                    userAnswer === i && i !== question.correct ? 'wrong' : ''
+                                }" style="${
+                                    userAnswer === i && i !== question.correct ? 'background: rgba(245, 101, 101, 0.2); border: 1px solid #f56565;' : ''
+                                }">
+                                    ${i === question.correct ? '✅' : userAnswer === i && i !== question.correct ? '❌' : '◯'} ${answer}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="finishQuiz()">🔙 العودة للنتائج</button>
+                </div>
+            </div>`;
+
+            document.getElementById('quizContent').innerHTML = html;
+        }
+
+        function restartQuiz() {
+            if (confirm('هل أنت متأكد من إعادة بدء الاختبار؟')) {
+                startQuiz();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateQuestionsList();
+        });
+    </script>
+</body>
+</html>
