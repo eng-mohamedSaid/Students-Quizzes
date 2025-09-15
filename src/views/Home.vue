@@ -1,22 +1,42 @@
 <template>
-  <div class="home">
-    <section class="hero">
-      <h2>منصة أوفلاين تساعد المعلم على إنشاء اختبارات تفاعلية للطلاب</h2>
-      <p>حفظ البيانات محليًا باستخدام LocalStorage</p>
-    </section>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🎓 اختبر تلاميذك</h1>
+      <p>منصة تعليمية تفاعلية أوفلاين</p>
+    </div>
 
-    <section class="how-to-use">
-      <h3>كيفية الاستخدام</h3>
-      <ol>
-        <li>إنشاء اختبار جديد في صفحة الإنشاء</li>
-        <li>إضافة الأسئلة والإجابات</li>
-        <li>حفظ الاختبار</li>
-        <li>بدء الاختبار من صفحة الاختبارات</li>
-      </ol>
-    </section>
+    <!-- Introduction -->
+    <div class="introduction">
+      <h2>مرحباً بك في منصة اختبر تلاميذك</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+        منصة أوفلاين تساعد المعلم على كتابة أسئلة تفاعلية لطلابه وحفظها محلياً،
+        ثم عرضها في شكل اختبارات ممتعة داخل الفصل. مناسبة لجميع المواد الدراسية
+        (قرآن - عربي - رياضيات - علوم - وأي مادة أخرى).
+      </p>
+    </div>
 
-    <div class="actions">
-      <router-link to="/create" class="btn btn-primary">سجل اختبار جديد</router-link>
+    <!-- Steps -->
+    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">كيفية الاستخدام</h3>
+    <div class="steps">
+      <div class="step">
+        <h3>1️⃣ إنشاء الأسئلة</h3>
+        <p>اكتب الأسئلة والإجابات في صفحة الإنشاء مع تحديد الإجابة الصحيحة لكل سؤال.</p>
+      </div>
+      <div class="step">
+        <h3>2️⃣ حفظ الاختبار</h3>
+        <p>اضغط زر حفظ الاختبار ليتم حفظه محلياً في جهازك بدون الحاجة للإنترنت.</p>
+      </div>
+      <div class="step">
+        <h3>3️⃣ بدء الاختبار</h3>
+        <p>انتقل إلى صفحة الاختبارات لعرض الأسئلة على الطلاب بأشكال تفاعلية متنوعة.</p>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+      <router-link class="btn" to="/create">🚀 ابدأ إنشاء اختبار جديد</router-link>
+      <router-link class="btn btn-secondary" to="/quizzes">📂 قائمة الاختبارات</router-link>
     </div>
   </div>
 </template>
@@ -26,58 +46,5 @@
 </script>
 
 <style scoped>
-.home {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.hero {
-  margin-bottom: 3rem;
-}
-
-.hero h2 {
-  color: var(--color-primary);
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.how-to-use {
-  text-align: right;
-  background: var(--color-gray-light);
-  padding: 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.how-to-use ol {
-  list-style-position: inside;
-  margin-top: 1rem;
-}
-
-.how-to-use li {
-  margin: 0.5rem 0;
-}
-
-.actions {
-  margin-top: 2rem;
-}
-
-.btn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-light);
-}
+/* Page relies on global .container, .header, .btn, .steps styles */
 </style>
